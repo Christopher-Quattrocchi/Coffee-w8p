@@ -15,11 +15,20 @@ function CoffeeSackDisplay({ image, name, inventory, style }) {
     height: "auto"
   }
 
+  let inventoryMessage;
+  if (inventory === 0) {
+    inventoryMessage = <p style={{ color: 'red' }}>Out of Stock</p>;
+  } else if (inventory <= 10) {
+    inventoryMessage = <p style={{ color: 'orange' }}>Almost Empty</p>;
+  } else {
+    inventoryMessage = <p>Inventory: {inventory}</p>;
+  }
+
   return (
     <div style={{...sackStyle, ...style}}>
       <img src={image} alt={`${name} sack`} style={imageStyle} />
       <h3>{name}</h3>
-      <p>Inventory: {inventory}</p>
+      <p>{inventoryMessage}</p>
     </div>
   );
 }
@@ -27,7 +36,8 @@ function CoffeeSackDisplay({ image, name, inventory, style }) {
 CoffeeSackDisplay.propTypes = {
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  inventory: PropTypes.number.isRequired
+  inventory: PropTypes.number.isRequired,
+  style: PropTypes.object
 };
 
 export default CoffeeSackDisplay;
