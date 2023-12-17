@@ -6,6 +6,10 @@ import OrderDetail from "./OrderDetail.js";
 import EditOrderForm from "./EditOrderForm.js";
 import PriceCalculator from "./PriceCalculator.js";
 import { v4 } from 'uuid';
+import arabica from "../img/arabica.jpg";
+import robusta from "../img/robusta.jpg";
+import excelsa from "../img/excelsa.jpg";
+
 
 class CartControl extends React.Component {
   constructor(props) {
@@ -40,7 +44,7 @@ class CartControl extends React.Component {
       const newMainCartList = this.state.mainCartList.concat({
         ...newOrder,
         id: v4(),
-        image: selectedItem.image
+        image: selectedItem.image || arabica
       });
 
       this.setState({ mainCartList: newMainCartList });
@@ -93,7 +97,8 @@ class CartControl extends React.Component {
     const updatedSelectedOrder = {
       ...selectedOrder,
       origin: selectedItemData ? selectedItemData.origin : '',
-      roast: selectedItemData ? selectedItemData.roast : ''
+      roast: selectedItemData ? selectedItemData.roast : '',
+      image: selectedItemData ? selectedItemData.image : null
     }
 
     this.setState({ selectedOrder: updatedSelectedOrder });

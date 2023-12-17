@@ -8,10 +8,11 @@ import robusta from "../img/robusta.jpg";
 import excelsa from "../img/excelsa.jpg";
 
 function OrderDetail(props){
-console.log("Order in OrderDetail:", props.order);
-  let imageSrc;
-  if (props.order.image) {
-    imageSrc = props.order.image;
+ const { order } = props;
+console.log("Order in OrderDetail:", order);
+  const imageSrc = order.image || arabica;
+  if (!imageSrc) {
+    imageSrc = arabica;
   };
   
   const itemStyling = {
@@ -33,7 +34,7 @@ console.log("Order in OrderDetail:", props.order);
   }
   
   let input;
-  const { order, onClickingDelete } = props;
+  const { onClickingDelete } = props;
   if (order.item === "arabica") {
     input = arabica;
   } else if (order.item === "robusta") {
