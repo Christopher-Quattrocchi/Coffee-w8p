@@ -26,18 +26,6 @@ function App() {
     }
   }
 
-  // const handleAddSack = (newSack) => {
-  //   const updatedSack = {
-  //     ...newSack, 
-  //     pricePerUnit: parseFloat(newSack.pricePerUnit), 
-  //     inventory: parseFloat(newSack.inventory),
-  //     image: getImageForProductType(newSack.productType) 
-  //   };
-  
-  //   setInventory([...inventory, updatedSack]);
-  //   setCoffeeSacks([...coffeeSacks, updatedSack]);
-  // };
-
   const handleAddSack = (newSack) => {
     const updatedSack = {
       ...newSack,
@@ -71,10 +59,10 @@ function App() {
 
 
   const defaultStyle = {
-    backgroundImage: `url(${background})`,
+    // backgroundImage: `url(${background})`,
     opactiy: "90%",
-    color: "#FFFC00",
-    fontFamily: ['Deborah Fancy Dress', "sans-serif"],
+    // color: "#FFFC00",
+    // fontFamily: ['Deborah Fancy Dress', "sans-serif"],
     fontSize: "150%",
     minHeight: "100%",
     marginBottom: "0%"
