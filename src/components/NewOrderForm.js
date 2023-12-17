@@ -5,12 +5,19 @@ import { v4 } from "uuid";
 function NewOrderForm(props) {
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const order = {
-      item: e.target.items.value,
-      quantity: parseInt(e.target.quantity.value),
-      description: getDescriptionForItem(e.target.items.value)
-    };
-    props.onNewOrderCreation(order);
+    const selectedItemType = e.target.items.value;
+    const selectedItemData = props.inventory.find(item => item.productType === selectedItemType);
+  
+    if (selectedItemData) {
+      const order = {
+        item: selectedItemType,
+        quantity: parseInt(e.target.quantity.value),
+        description: selectedItemData.description
+      };
+      props.onNewOrderCreation(order);
+    } else {
+      console.error("Item data not found for the selected type");
+    }
   }
   const [isHovered, setIsHovered] = useState(false);
   // const [errorMessage, setErrorMessage] = useState("");

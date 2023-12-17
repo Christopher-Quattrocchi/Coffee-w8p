@@ -7,7 +7,7 @@ import arabicaImage from "../img/arabica.jpg";
 import robustaImage from "../img/robusta.jpg";
 import excelsaImage from "../img/excelsa.jpg";
 import CoffeeSackDisplay from './CoffeeSackDisplay.js';
-import NewCoffeeSackForm from './NewCoffeSack.js';
+import NewCoffeeSackForm from './NewCoffeeSack.js';
 
 
 
@@ -41,7 +41,7 @@ function App() {
   const handleAddSack = (newSack) => {
     const updatedSack = {
       ...newSack,
-      image: getImageForProductType(newSack.productType),
+      image: arabicaImage,
       name: newSack.productType,
       inventory: parseFloat(newSack.inventory)
     };

@@ -16,34 +16,14 @@ class CartControl extends React.Component {
       selectedOrder: null,
       errorMessage: "",
       editing: false,
-      itemData: [
-        {
-          productType: "arabica",
-          description:
-            "Sweet, fruity taste. High acidity. The A-list celebrity of coffee beans",
-          origin: "Latin America",
-          roast: "Medium",
-          pricePerUnit: 20,
-          inventory: 130
-        },
-        {
-          productType: "robusta",
-          description: "Strong, with a bitter, nutty flavor. Less sugar and more caffeine than other beans",
-          origin: "Western Africa",
-          roast: "Dark",
-          pricePerUnit: 25,
-          inventory: 130
-        },
-        {
-          productType: "excelsa",
-          description: "Tart, fruity. Part of the Liberca family, like its mysterious cousin",
-          origin: "Southeast Asia",
-          roast: "Light",
-          pricePerUnit: 30,
-          inventory: 130
-        },
-      ],
+      itemData: this.props.inventory
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.inventory !== this.props.inventory) {
+      this.setState({ itemData: this.props.inventory });
+    }
   }
 
   handleEditClick = () => {
@@ -59,12 +39,13 @@ class CartControl extends React.Component {
 
       const newMainCartList = this.state.mainCartList.concat({
         ...newOrder,
-        id: v4()
+        id: v4(),
+        image: selectedItem.image
       });
 
       this.setState({ mainCartList: newMainCartList });
     } else {
-      this.setState({ errorMessage: "Can't place order, out of stock" })
+      this.setState({ errorMessage: "Can't place order, out of stock" });
     }
   };
 
@@ -73,16 +54,16 @@ class CartControl extends React.Component {
   };
 
   updateInventory = (productType, newInventory) => {
-    const updatedItemData = this.state.itemData.map((item) =>
-      item.productType === productType
-        ? { ...item, inventory: newInventory }
-        : item
-    );
+    this.setState(prevState => ({
+      itemData: prevState.itemData.map(item =>
+        item.productType === productType
+          ? { ...item, inventory: newInventory }
+          : item
+      )
+    }), () => {
 
-    this.setState({ itemData: updatedItemData });
-
-  
-    this.props.onInventoryChange(updatedItemData);
+      this.props.onInventoryChange(this.state.itemData);
+    });
   };
 
 
@@ -141,15 +122,15 @@ class CartControl extends React.Component {
   };
 
   render() {
+    console.log("Main Cart List:", this.state.mainCartList);
 
 
- 
     const cartStyles = {
       // backgroundColor: "#61dafb",
       textAlign: "center"
     }
 
- 
+
     let currentView = null;
     if (this.state.editing === true) {
       currentView = (

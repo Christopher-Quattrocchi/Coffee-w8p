@@ -8,6 +8,11 @@ import robusta from "../img/robusta.jpg";
 import excelsa from "../img/excelsa.jpg";
 
 function OrderDetail(props){
+console.log("Order in OrderDetail:", props.order);
+  let imageSrc;
+  if (props.order.image) {
+    imageSrc = props.order.image;
+  };
   
   const itemStyling = {
     textAlign: "left",
@@ -47,8 +52,8 @@ function OrderDetail(props){
           <p>Origin: {order.origin}</p>
           <p>Roast: {order.roast}</p>
           <img 
-          src={input} 
-          alt= {altAttribute} 
+          src={order.image} 
+          alt= {`Image of ${order.item}`} 
           style={imageStyle}/>
           <p>Description: {order.description}</p>
           <div style={alignmentCenter}>

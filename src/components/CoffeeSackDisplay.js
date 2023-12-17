@@ -7,7 +7,8 @@ import PropTypes from 'prop-types';
 function CoffeeSackDisplay({ image, name, inventory, style }) {
   const sackStyle = {
     margin: '10px',
-    width: '30%'
+    width: 'calc(20% - 20px)',
+    boxSizing: 'border-box'
   }
 
   const imageStyle = {
