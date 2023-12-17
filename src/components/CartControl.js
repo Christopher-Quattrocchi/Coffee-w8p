@@ -5,6 +5,7 @@ import NewOrderForm from "./NewOrderForm.js";
 import OrderDetail from "./OrderDetail.js";
 import EditOrderForm from "./EditOrderForm.js";
 import PriceCalculator from "./PriceCalculator.js";
+import { v4 } from 'uuid';
 
 class CartControl extends React.Component {
   constructor(props) {
@@ -50,7 +51,22 @@ class CartControl extends React.Component {
     this.setState({ editing: true });
   };
 
+  handleNewOrderCreation = (newOrder) => {
+    const selectedItem = this.state.itemData.find(item => item.productType === newOrder.item);
+    if (selectedItem && newOrder.quantity <= selectedItem.inventory) {
+      const updatedInventory = selectedItem.inventory - newOrder.quantity;
+      this.updateInventory(newOrder.item, updatedInventory);
 
+      const newMainCartList = this.state.mainCartList.concat({
+        ...newOrder,
+        id: v4()
+      });
+
+      this.setState({ mainCartList: newMainCartList });
+    } else {
+      this.setState({ errorMessage: "Can't place order, out of stock" })
+    }
+  };
 
   setErrorMessage = (message) => {
     this.setState({ errorMessage: message });
@@ -60,16 +76,16 @@ class CartControl extends React.Component {
     const updatedItemData = this.state.itemData.map((item) =>
       item.productType === productType
         ? { ...item, inventory: newInventory }
-        : item      
+        : item
     );
-  
+
     this.setState({ itemData: updatedItemData });
+
   
-    // Pass updated inventory data to App
     this.props.onInventoryChange(updatedItemData);
   };
-   
-  
+
+
 
   toggleCartVisibility = () => {
     if (this.state.selectedOrder != null) {
@@ -104,7 +120,7 @@ class CartControl extends React.Component {
 
   handleEditingOrderInList = (orderToEdit) => {
     const editedMainCartList = this.state.mainCartList.map((order) =>
-    order.id === orderToEdit.id ? { ...order, ...orderToEdit } : order
+      order.id === orderToEdit.id ? { ...order, ...orderToEdit } : order
     );
     this.setState({
       mainCartList: editedMainCartList,
@@ -125,15 +141,15 @@ class CartControl extends React.Component {
   };
 
   render() {
-    
 
-    // Stylesheets
+
+ 
     const cartStyles = {
       // backgroundColor: "#61dafb",
       textAlign: "center"
     }
 
-    // Branching for Current View
+ 
     let currentView = null;
     if (this.state.editing === true) {
       currentView = (
@@ -157,6 +173,7 @@ class CartControl extends React.Component {
     } else if (this.state.cartOpen === false) {
       currentView = (
         <NewOrderForm
+          inventory={this.props.inventory}
           onNewOrderCreation={this.handleAddingNewOrderToList}
           updateInventory={this.updateInventory}
           itemData={this.state.itemData}
@@ -167,18 +184,18 @@ class CartControl extends React.Component {
     } else {
       currentView = (
         <React.Fragment>
-        
-        <div style={cartStyles}>
-          <h3>Your Cart</h3>
-          <CartList
-            cartList={this.state.mainCartList}
-            onOrderSelection={this.handleChangingSelectedOrder}
-          />
-          <PriceCalculator 
-            cartList={this.state.mainCartList}
-            itemData={this.state.itemData}
+
+          <div style={cartStyles}>
+            <h3>Your Cart</h3>
+            <CartList
+              cartList={this.state.mainCartList}
+              onOrderSelection={this.handleChangingSelectedOrder}
             />
-        </div>
+            <PriceCalculator
+              cartList={this.state.mainCartList}
+              itemData={this.state.itemData}
+            />
+          </div>
         </React.Fragment>
       );
     }

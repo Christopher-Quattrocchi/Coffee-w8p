@@ -26,8 +26,28 @@ function App() {
     }
   }
 
+  // const handleAddSack = (newSack) => {
+  //   const updatedSack = {
+  //     ...newSack, 
+  //     pricePerUnit: parseFloat(newSack.pricePerUnit), 
+  //     inventory: parseFloat(newSack.inventory),
+  //     image: getImageForProductType(newSack.productType) 
+  //   };
+  
+  //   setInventory([...inventory, updatedSack]);
+  //   setCoffeeSacks([...coffeeSacks, updatedSack]);
+  // };
+
   const handleAddSack = (newSack) => {
-    setInventoryUpdated([...inventory, { ...newSack, pricePerUnit: parseFloat(newSack.pricePerUnit), inventory: parseFloat(newSack.inventory) }]);
+    const updatedSack = {
+      ...newSack,
+      image: getImageForProductType(newSack.productType),
+      name: newSack.productType,
+      inventory: parseFloat(newSack.inventory)
+    };
+  
+    setInventory([...inventory, updatedSack]);
+    setCoffeeSacks([...coffeeSacks, updatedSack]);
   };
 
   const [inventoryUpdated, setInventoryUpdated] = useState(false);
@@ -42,7 +62,7 @@ function App() {
     const updatedCoffeeSacks = updatedInventory.map(item => ({
       name: item.productType,
       image: getImageForProductType(item.productType),
-      inventory: item.inventory
+      inventory: Number(item.inventory)
     }));
 
     setCoffeeSacks(updatedCoffeeSacks);
@@ -85,6 +105,7 @@ function App() {
           onAddSack={handleAddSack} />
         <CartControl
           onInventoryChange={handleInventoryChange}
+          // onNewOrderCreation={handleNewOrderCreation}
           inventory={inventory} />
         <div style={containerStyle}>
           {coffeeSacks.map(sack => (

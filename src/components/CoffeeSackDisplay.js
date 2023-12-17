@@ -21,7 +21,7 @@ function CoffeeSackDisplay({ image, name, inventory, style }) {
   } else if (inventory <= 10) {
     inventoryMessage = <p style={{ color: 'orange' }}>Almost Empty</p>;
   } else {
-    inventoryMessage = <p>Inventory: {inventory}</p>;
+    inventoryMessage = <span>Inventory: {inventory}</span>;
   }
 
   return (

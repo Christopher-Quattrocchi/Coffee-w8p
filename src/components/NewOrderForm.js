@@ -3,6 +3,15 @@ import PropTypes from "prop-types";
 import { v4 } from "uuid";
 
 function NewOrderForm(props) {
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const order = {
+      item: e.target.items.value,
+      quantity: parseInt(e.target.quantity.value),
+      description: getDescriptionForItem(e.target.items.value)
+    };
+    props.onNewOrderCreation(order);
+  }
   const [isHovered, setIsHovered] = useState(false);
   // const [errorMessage, setErrorMessage] = useState("");
   const [currentStyle, setCurrentStyle] = useState({});
@@ -85,9 +94,11 @@ function NewOrderForm(props) {
           <br />
           <label htmlFor="items">All Items: </label>
           <select name="items" id="items" style={dropdownStyle}>
-            <option value="arabica">Arabica</option>
-            <option value="robusta">Robusta</option>
-            <option value="excelsa">Excelsa</option>
+            {props.inventory.map(sack => (
+              <option key={sack.productType} value={sack.productType}>
+                {sack.productType}
+              </option>
+            ))}
           </select>
           <br />
           <p>
@@ -116,6 +127,7 @@ function NewOrderForm(props) {
 }
 NewOrderForm.propTypes = {
   onNewOrderCreation: PropTypes.func,
+  inventory: PropTypes.array.isRequired
 };
 
 export default NewOrderForm;
