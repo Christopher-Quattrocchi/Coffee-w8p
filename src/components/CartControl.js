@@ -46,7 +46,7 @@ class CartControl extends React.Component {
   }
 
   handleEditClick = () => {
-    console.log("handleEditClick!!");
+    // console.log("handleEditClick!!");
     this.setState({ editing: true });
   };
 
@@ -64,7 +64,7 @@ class CartControl extends React.Component {
           : item
       ),
     }));
-    console.log(`Remaining stock of ${productType}: ${newInventory}`);
+    // console.log(`Remaining stock of ${productType}: ${newInventory}`);
   };
 
   toggleCartVisibility = () => {

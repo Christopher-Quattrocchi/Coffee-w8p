@@ -4,7 +4,7 @@ import { v4 } from "uuid";
 
 function NewOrderForm(props) {
   const [isHovered, setIsHovered] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  // const [errorMessage, setErrorMessage] = useState("");
   const [currentStyle, setCurrentStyle] = useState({});
   // Stylesheets
   const styleTextSuccess = {

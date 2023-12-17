@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Order(props) {
-  const centerAlign = {
-    textAlign: "center",
-  };
+  // const centerAlign = {
+  //   textAlign: "center",
+  // };
   const singleItem = {
     textAlign: "left",
     marginLeft: "30%",

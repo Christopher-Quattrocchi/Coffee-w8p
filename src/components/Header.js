@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Widget from "./Widget";
+// import Widget from "./Widget";
 import "../App.css";
 
 function Header() {
