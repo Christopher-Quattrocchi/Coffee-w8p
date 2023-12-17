@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // import robusta from "../img/robusta.jpg";
 // import excelsa from "../img/excelsa.jpg";
 
-function CoffeeSackDisplay({ image, name, inventory }) {
+function CoffeeSackDisplay({ image, name, inventory, style }) {
   const sackStyle = {
     margin: '10px',
     width: '30%'
@@ -16,7 +16,7 @@ function CoffeeSackDisplay({ image, name, inventory }) {
   }
 
   return (
-    <div style={sackStyle}>
+    <div style={{...sackStyle, ...style}}>
       <img src={image} alt={`${name} sack`} style={imageStyle} />
       <h3>{name}</h3>
       <p>Inventory: {inventory}</p>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from './Header.js';
 import CartControl from './CartControl.js';
 import '../App.css';
@@ -10,7 +10,37 @@ import CoffeeSackDisplay from './CoffeeSackDisplay.js';
 
 
 
+
 function App() {
+  const getImageForProductType = (productType) => {
+    switch (productType) {
+      case 'arabica':
+        return arabicaImage;
+      case 'robusta':
+        return robustaImage;
+      case 'excelsa':
+        return excelsaImage;
+      default:
+        return arabicaImage;
+    }
+  }
+
+
+  const [inventoryUpdated, setInventoryUpdated] = useState(false);
+
+  const handleInventoryChange = (updatedInventory) => {
+
+    const updatedCoffeeSacks = updatedInventory.map(item => ({
+      name: item.productType,
+      image: getImageForProductType(item.productType),
+      inventory: item.inventory
+    }));
+
+    setCoffeeSacks(updatedCoffeeSacks);
+  };
+
+
+
   const defaultStyle = {
     backgroundImage: `url(${background})`,
     opactiy: "90%",
@@ -28,11 +58,11 @@ function App() {
     flexWrap: 'wrap',
   };
 
-  const coffeeSacks = [
+  const [coffeeSacks, setCoffeeSacks] = useState([
     { name: 'Arabica', image: arabicaImage, inventory: 130 },
     { name: 'Robusta', image: robustaImage, inventory: 130 },
     { name: 'Exelsa', image: excelsaImage, inventory: 130 },
-  ];
+  ]);
 
 
   return (
@@ -40,7 +70,8 @@ function App() {
       <link href="https://fonts.cdnfonts.com/css/deborah-fancy-dress" rel="stylesheet"></link>
       <div className="background" style={defaultStyle}>
         <NavBar />
-        <CartControl />
+        <CartControl
+          onInventoryChange={handleInventoryChange} />
         <div style={containerStyle}>
           {coffeeSacks.map(sack => (
             <CoffeeSackDisplay

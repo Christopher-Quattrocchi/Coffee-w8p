@@ -57,15 +57,19 @@ class CartControl extends React.Component {
   };
 
   updateInventory = (productType, newInventory) => {
-    this.setState((prevState) => ({
-      itemData: prevState.itemData.map((item) =>
-        item.productType === productType
-          ? { ...item, inventory: newInventory }
-          : item
-      ),
-    }));
-    // console.log(`Remaining stock of ${productType}: ${newInventory}`);
+    const updatedItemData = this.state.itemData.map((item) =>
+      item.productType === productType
+        ? { ...item, inventory: newInventory }
+        : item      
+    );
+  
+    this.setState({ itemData: updatedItemData });
+  
+    // Pass updated inventory data to App
+    this.props.onInventoryChange(updatedItemData);
   };
+   
+  
 
   toggleCartVisibility = () => {
     if (this.state.selectedOrder != null) {
